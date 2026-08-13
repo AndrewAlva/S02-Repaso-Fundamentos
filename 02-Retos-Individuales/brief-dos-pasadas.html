@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dos pasadas · Brief S2</title>
+<meta name="description" content="Construyes la misma pieza dos veces. La segunda es el ejercicio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   Mismo sistema visual que el cheatsheet.
+   Papel = lo que decides tú. Pantalla = lo que no se negocia.
+   ============================================================ */
+:root{
+  --paper:#E4E7E1; --paper-hi:#F1F3EF; --ink:#15181B; --ink-soft:#5D655F;
+  --rule:#C7CDC4; --magenta:#D2006B; --screen:#12161A; --screen-2:#1B2127;
+  --screen-ink:#DDE4DE; --screen-dim:#7C8A80; --citron:#CFF25C;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"IBM Plex Sans",ui-sans-serif,system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --pad:clamp(20px,5vw,48px);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--f-body);
+  font-size:16.5px;line-height:1.6}
+h1,h2,h3{font-family:var(--f-display);font-weight:800;letter-spacing:-.02em;line-height:1.03;margin:0}
+p{margin:0 0 .85em}
+p:last-child{margin-bottom:0}
+code{font-family:var(--f-mono);font-size:.88em;background:rgba(21,24,27,.07);
+  padding:.12em .38em;border-radius:3px;white-space:nowrap}
+strong{font-weight:600}
+:focus-visible{outline:2px solid var(--magenta);outline-offset:3px;border-radius:3px}
+.screen :focus-visible{outline-color:var(--citron)}
+
+.wrap{max-width:760px;margin:0 auto;padding:0 var(--pad) 18vh}
+
+.eyebrow{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.16em;
+  text-transform:uppercase;color:var(--ink-soft)}
+
+/* ---------- portada ---------- */
+header{padding:clamp(48px,10vw,96px) 0 clamp(28px,5vw,44px)}
+h1{font-size:clamp(40px,9vw,76px);margin:.28em 0 0;max-width:14ch}
+.lede{font-size:clamp(18px,2.4vw,22px);line-height:1.4;margin:1.1em 0 0;
+  max-width:34ch;color:var(--ink);border-left:3px solid var(--magenta);padding-left:16px}
+.intro{margin-top:2.2em;color:var(--ink-soft);max-width:60ch}
+.intro strong{color:var(--ink)}
+
+/* ---------- barra de avance ---------- */
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);
+  border-bottom:1px solid var(--rule);padding:11px 0;margin-bottom:clamp(28px,5vw,48px);
+  display:flex;align-items:center;gap:14px}
+.bar .eyebrow{white-space:nowrap}
+.track{flex:1;height:3px;background:var(--rule);position:relative;overflow:hidden}
+.fill{position:absolute;inset:0 auto 0 0;width:0;background:var(--magenta);
+  transition:width .28s ease}
+
+/* ---------- pasos ---------- */
+.paso{display:grid;grid-template-columns:52px 1fr;gap:0 20px;
+  padding:26px 0;border-top:1px solid var(--rule);align-items:start}
+.paso:first-of-type{border-top:none}
+.num{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--magenta);
+  padding-top:5px;letter-spacing:.04em}
+.paso h3{font-size:clamp(21px,3vw,27px);margin-bottom:.55em}
+.paso-body{max-width:58ch}
+.paso.hecho .num,.paso.hecho h3,.paso.hecho .paso-body{opacity:.42}
+.paso.hecho h3{text-decoration:line-through;text-decoration-thickness:1.5px}
+.marca{grid-column:1;justify-self:start;margin-top:14px;width:26px;height:26px;
+  border:1.5px solid var(--rule);background:transparent;border-radius:50%;
+  cursor:pointer;display:grid;place-items:center;padding:0;transition:.16s}
+.marca:hover{border-color:var(--magenta)}
+.marca::after{content:"";width:11px;height:11px;border-radius:50%;background:transparent;transition:.16s}
+.paso.hecho .marca{border-color:var(--magenta);opacity:1}
+.paso.hecho .marca::after{background:var(--magenta)}
+.marca span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- bloque oscuro: reglas ---------- */
+.screen{background:var(--screen);color:var(--screen-ink);margin:clamp(44px,7vw,72px) 0 0;
+  padding:clamp(30px,5vw,46px);border-radius:2px}
+.screen .eyebrow{color:var(--screen-dim)}
+.screen h2{font-size:clamp(24px,4vw,34px);margin:.3em 0 1em;color:#fff}
+.screen ul{list-style:none;margin:0;padding:0}
+.screen li{padding:14px 0 14px 30px;border-top:1px solid rgba(207,242,92,.16);
+  position:relative;max-width:60ch}
+.screen li:first-child{border-top:none;padding-top:0}
+.screen li::before{content:"—";position:absolute;left:0;color:var(--citron);
+  font-family:var(--f-mono)}
+.screen li:first-child::before{top:0}
+.screen code{background:rgba(207,242,92,.13);color:var(--citron)}
+.screen strong{color:#fff}
+
+/* ---------- secciones de papel ---------- */
+section.papel{margin-top:clamp(44px,7vw,72px)}
+section.papel h2{font-size:clamp(24px,4vw,34px);margin:.3em 0 .9em}
+.nota{color:var(--ink-soft);max-width:56ch;margin-bottom:1.6em}
+
+.check{list-style:none;margin:0;padding:0}
+.check li{position:relative;padding:13px 0 13px 34px;border-top:1px solid var(--rule);
+  max-width:58ch}
+.check li::before{content:"";position:absolute;left:0;top:17px;width:15px;height:15px;
+  border:1.5px solid var(--ink-soft)}
+
+.preg{list-style:none;margin:0;padding:0;counter-reset:q}
+.preg li{counter-increment:q;position:relative;padding:15px 0 15px 44px;
+  border-top:1px solid var(--rule);max-width:58ch;font-size:1.03em}
+.preg li::before{content:"0" counter(q);position:absolute;left:0;top:17px;
+  font-family:var(--f-mono);font-size:12px;color:var(--magenta);letter-spacing:.06em}
+
+.cierre{margin-top:clamp(44px,7vw,72px);border-top:3px solid var(--ink);padding-top:26px}
+.cierre h2{font-size:clamp(20px,3vw,26px);margin-bottom:.9em}
+.cierre ul{list-style:none;margin:0;padding:0}
+.cierre li{padding:9px 0 9px 26px;position:relative;max-width:58ch;color:var(--ink-soft)}
+.cierre li::before{content:"→";position:absolute;left:0;color:var(--magenta);
+  font-family:var(--f-mono)}
+.cierre strong{color:var(--ink)}
+
+@media (max-width:520px){
+  .paso{grid-template-columns:36px 1fr;gap:0 14px}
+  .marca{width:23px;height:23px;margin-top:11px}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none !important}
+}
+@media print{
+  .bar{display:none}
+  .screen{background:#fff;color:#000;border:2px solid #000}
+  .screen h2,.screen strong{color:#000}
+  .screen li::before{color:#000}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="eyebrow">Brief S2 · círculos en canvas</div>
+  <h1>Dos pasadas</h1>
+  <p class="lede">Construyes la misma pieza dos veces. La segunda es el ejercicio.</p>
+  <div class="intro"><p>La primera versión mide dónde estás. La segunda mide qué es tuyo de verdad: lo que puedes reconstruir sin fuentes es lo único que vas a tener disponible cuando estés solo frente a un problema nuevo.</p><p>Todo sale del starter que tienen todos. El paso 0 viene resuelto; lo demás lo escribes tú.</p></div>
+</header>
+
+<div class="bar">
+  <span class="eyebrow" id="cuenta">0 / 7 pasos</span>
+  <span class="track"><span class="fill" id="fill"></span></span>
+</div>
+
+<main id="pasos">
+<article class="paso"><div class="num">01</div><div><h3>Pasada 1 · 25 minutos con cronómetro</h3><div class="paso-body"><p>Pasos 1 a 7 del starter. Como te salga. Feo está bien, repetido está bien.</p><p>Cuando suene el cronómetro, guarda y <strong>cierra el archivo</strong>. No lo pulas.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 1 como hecho</span></button></article>
+<article class="paso"><div class="num">02</div><div><h3>Anota qué te costó</h3><div class="paso-body"><p>Antes de abrir nada más: lista de los puntos donde dudaste, te trabaste o tuviste que buscar. Una línea cada uno.</p><p>Esa lista va a la bitácora y vale más que la pieza.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 2 como hecho</span></button></article>
+<article class="paso"><div class="num">03</div><div><h3>Pasada 2 · archivo en blanco</h3><div class="paso-body"><p>Sin abrir la versión 1. Sin IA. De memoria.</p><p>Va a haber cosas que no recuerdes. <strong>Anótalas en vez de buscarlas</strong> y sigue con lo que sí puedes. Los huecos son el resultado del ejercicio, no un fracaso.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 3 como hecho</span></button></article>
+<article class="paso"><div class="num">04</div><div><h3>Sube el estándar</h3><div class="paso-body"><p>La versión 2 tiene que ser mejor que la 1 en algo que puedas señalar: menos líneas, nombres más claros, o un comportamiento más.</p><p>Si salió idéntica, todavía no terminaste.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 4 como hecho</span></button></article>
+<article class="paso"><div class="num">05</div><div><h3>Saca los números</h3><div class="paso-body"><p>Un objeto <code>config</code> arriba del archivo con todos los valores: cantidad, rango de tamaños, rango de velocidades, paleta, factor de rebote.</p><p>Dentro de la lógica no queda <strong>ni un número suelto</strong>. Si ves un <code>34</code> o un <code>0.8</code> en medio de una función, sácalo.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 5 como hecho</span></button></article>
+<article class="paso"><div class="num">06</div><div><h3>Pásasela a alguien</h3><div class="paso-body"><p>Un compañero cambia <strong>solo el <code>config</code></strong>, sin tocar la lógica.</p><p>Si la pieza no cambia de carácter con eso, algo sigue enterrado en el código y hay que sacarlo.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 6 como hecho</span></button></article>
+<article class="paso"><div class="num">07</div><div><h3>Compara</h3><div class="paso-body"><p>Abre las dos versiones lado a lado. Qué se te olvidó, qué salió mejor sin que lo buscaras, qué harías distinto en una tercera.</p></div></div><button class="marca" type="button" aria-pressed="false"><span>Marcar paso 7 como hecho</span></button></article>
+</main>
+
+<div class="screen">
+  <div class="eyebrow">No se negocia</div>
+  <h2>Reglas</h2>
+  <ul><li>Cero IA en las dos pasadas. Aquí la bitácora documenta lo contrario de siempre: <strong>qué no supiste sin ayuda</strong>.</li><li>No abras la versión 1 durante la pasada 2. Es la única regla que, si la rompes, anula el ejercicio.</li><li>Sin librerías, sin clases, sin módulos. Las mismas cinco piezas.</li><li>Guarda las dos versiones. Se entregan las dos.</li></ul>
+</div>
+
+<section class="papel">
+  <div class="eyebrow">Antes de entregar</div>
+  <h2>Está listo cuando</h2>
+  <p class="nota">Si alguna no se cumple, todavía no lo entregues. Estas son las mismas condiciones con las que se va a revisar.</p>
+  <ul class="check"><li>Te señalo una línea al azar de la versión 2 y la explicas sin abrir nada.</li><li>Un compañero re-dirigió la pieza tocando solo el <code>config</code>.</li><li>Tu lista de &quot;no me acordé&quot; está escrita en la bitácora.</li></ul>
+</section>
+
+<section class="papel">
+  <div class="eyebrow">Crítica</div>
+  <h2>Preguntas de defensa</h2>
+  <p class="nota">Las vas a contestar en voz alta frente al grupo. Tenlas pensadas antes, no improvisadas: se evalúa cómo sostienes tus decisiones, no nada más que la pieza corra.</p>
+  <ol class="preg"><li>¿Qué decidiste que fuera parámetro y qué dejaste fijo? ¿Por qué esa línea y no otra?</li><li>¿Qué se te olvidó en la pasada 2 y qué te dice eso?</li><li>¿Cuál de las dos versiones defenderías en tu portafolio y por qué?</li><li>¿En qué momento estuviste a punto de copiar y pegar?</li></ol>
+</section>
+
+<section class="cierre">
+  <h2>Antes de cerrar la sesión</h2>
+  <ul><li><strong>60 fps</strong> es restricción de la pieza, no un extra. Ten el medidor abierto mientras trabajas.</li><li><strong>Bitácora</strong> al día: qué consultaste, qué aceptaste, qué descartaste y por qué.</li><li><strong>Subes el ejercicio</strong> al repositorio y lo publicas.</li><li><strong>Lo defiendes en voz alta</strong> en la crítica. Se evalúa cómo sostienes tus decisiones, no solo que corra.</li></ul>
+</section>
+
+</div>
+
+<script>
+// Marcar pasos como hechos. Se reinicia al recargar: es para la sesión, no un registro.
+(function () {
+  var pasos = Array.prototype.slice.call(document.querySelectorAll('.paso'));
+  var cuenta = document.getElementById('cuenta');
+  var fill = document.getElementById('fill');
+
+  function actualizar() {
+    var hechos = pasos.filter(function (p) { return p.classList.contains('hecho'); }).length;
+    cuenta.textContent = hechos + ' / ' + pasos.length + ' pasos';
+    fill.style.width = (hechos / pasos.length * 100) + '%';
+  }
+
+  pasos.forEach(function (paso) {
+    var boton = paso.querySelector('.marca');
+    boton.addEventListener('click', function () {
+      var hecho = paso.classList.toggle('hecho');
+      boton.setAttribute('aria-pressed', hecho ? 'true' : 'false');
+      actualizar();
+    });
+  });
+
+  actualizar();
+})();
+</script>
+</body>
+</html>
